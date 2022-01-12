@@ -17,7 +17,7 @@ class Router(typing.Generic[T]):
     def __init__(self) -> None:
         self._router = _Router()
 
-    def insert(self, path: str, value: T, /) -> None:
+    def insert(self, path: str, value: T) -> None:
         self._router.insert(path, value)
 
     def find(self, path: str) -> typing.Optional[Match[T]]:
