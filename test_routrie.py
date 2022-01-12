@@ -1,4 +1,7 @@
 from typing import Iterable, List, Tuple
+
+import pytest
+
 from routrie import Router, Param
 
 
@@ -39,3 +42,7 @@ def test_routing():
     assert node is not None
     assert node.value == 8
     assert params_to_tuple(node.params) == [("any", "user/s")]
+
+
+if __name__ == "__main__":
+    pytest.main()

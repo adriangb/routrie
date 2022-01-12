@@ -45,5 +45,16 @@ assert matched.params[0].name = "any"
 assert matched.params[0].value = "something"
 ```
 
+## Contributing
+
+1. Clone the repo.
+1. Run `make init`
+1. Run `make test`
+1. Make your changes
+1. Push and open a pull request
+1. Wait for CI to run.
+
+If your pull request gets approved and merged, it will automatically be relased to PyPi (every commit to `main` is released).
+
 [path-tree repo]: https://github.com/viz-rs/path-tree
 [path-tree crate]: https://crates.io/crates/path-tree/0.1.8/dependencies
