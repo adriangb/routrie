@@ -1,0 +1,22 @@
+[package]
+name = "routrie"
+version = "0.1.0"
+edition = "2018"
+description = "Rust port of the Python stdlib routrie modules"
+readme = "README.md"
+license-file = "LICENSE.txt"
+
+[lib]
+name = "routrie"
+crate-type = ["cdylib"]
+
+[dependencies.pyo3]
+version = "~0.15"
+features = ["extension-module", "abi3-py37"]
+
+[dependencies]
+path-tree = "~0.1"
+
+[package.metadata.maturin]
+python-source = "python"
+description-content-type = "text/markdown; charset=UTF-8; variant=GFM"
