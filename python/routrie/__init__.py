@@ -12,6 +12,8 @@ T = typing.TypeVar("T")
 
 
 class Router(typing.Generic[T]):
+    __slots__ = ("_router",)
+
     _router: _Router[T]
 
     def __init__(self) -> None:
