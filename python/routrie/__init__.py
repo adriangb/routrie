@@ -7,7 +7,7 @@ from routrie._routrie import Router as _Router
 T = typing.TypeVar("T")
 
 Params = typing.List[typing.Tuple[str, str]]
-
+Match = typing.Tuple[T, Params]
 
 class Router(typing.Generic[T]):
     __slots__ = ("_router",)
@@ -20,5 +20,5 @@ class Router(typing.Generic[T]):
     def insert(self, path: str, value: T) -> None:
         self._router.insert(path, value)
 
-    def find(self, path: str) -> typing.Tuple[T, Params]:
+    def find(self, path: str) -> typing.Optional[Match[T]]:
         return self._router.find(path)
