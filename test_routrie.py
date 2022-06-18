@@ -1,15 +1,9 @@
-from typing import Iterable, List, Tuple
-
 import pytest
 
-from routrie import Router, Param
+from routrie import Router
 
 
-def params_to_tuple(params: Iterable[Param]) -> List[Tuple[str, str]]:
-    return [(p.name, p.value) for p in params]
-
-
-def test_routing():
+def test_routing() -> None:
     router: Router[int] = Router()
     router.insert("/", 0)
     router.insert("/users", 1)
@@ -28,20 +22,32 @@ def test_routing():
     # Matched "/"
     node = router.find("/")
     assert node is not None
-    assert node.value == 0
-    assert params_to_tuple(node.params) == []
+    match, params = node
+    assert match == 0
+    assert params == []
 
     # Matched "/:username"
     node = router.find("/username")
     assert node is not None
-    assert node.value == 7
-    assert params_to_tuple(node.params) == [("username", "username")]
+    match, params = node
+    assert match == 7
+    assert params == [("username", "username")]
 
     # Matched "/*any"
     node = router.find("/user/s")
     assert node is not None
-    assert node.value == 8
-    assert params_to_tuple(node.params) == [("any", "user/s")]
+    match, params = node
+    assert match == 8
+    assert params == [("any", "user/s")]
+
+
+def test_no_match() -> None:
+    router: Router[int] = Router()
+    router.insert("/", 0)
+
+    # No match
+    node = router.find("/noway-jose")
+    assert node is None
 
 
 if __name__ == "__main__":

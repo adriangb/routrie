@@ -24,25 +24,29 @@ assert matched is None
 
 matched = router.find("/users/routrie")
 assert matched is not None
-assert matched.value == 2
-assert matched.params[0].name == "id"
-assert matched.params[0].value == "routrie"
+value, params = matched
+assert value == 2
+assert params[0].name == "id"
+assert params[0].value == "routrie"
 
 matched = router.find("/users")
 assert matched is not None
-assert matched.value == 1
-assert matched.params == []
+value, params = matched
+assert value == 1
+assert params == []
 
 matched = router.find("/users/repos/)
 assert matched is not None
-assert matched.value == 3
-assert matched.params == []
+value, params = matched
+assert value == 3
+assert params == []
 
 matched = router.find("/users/repos/something)
 assert matched is not None
-assert matched.value == 3
-assert matched.params[0].name = "any"
-assert matched.params[0].value = "something"
+value, params = matched
+assert value == 3
+assert params[0].name = "any"
+assert params[0].value = "something"
 ```
 
 ## Contributing
