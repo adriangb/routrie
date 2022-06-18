@@ -53,7 +53,7 @@ impl Match {
     }
 }
 
-#[pyclass(module = "routrie")]
+#[pyclass(module = "routrie._routrie")]
 struct Router {
     router: PathTree<Py<PyAny>>,
 }
@@ -88,7 +88,7 @@ impl Router {
 }
 
 #[pymodule]
-fn routrie(_py: Python, m: &PyModule) -> PyResult<()> {
+fn _routrie(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<Param>()?;
     m.add_class::<Match>()?;
     m.add_class::<Router>()?;
