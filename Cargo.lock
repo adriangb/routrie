@@ -169,7 +169,7 @@ dependencies = [
 
 [[package]]
 name = "routrie"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "path-tree",
  "pyo3",

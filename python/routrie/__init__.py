@@ -1,15 +1,16 @@
 from __future__ import annotations
 
-import typing
+from typing import Generic, List, Optional, Tuple, TypeVar
 
 from routrie._routrie import Router as _Router
 
-T = typing.TypeVar("T")
+T = TypeVar("T")
 
-Params = typing.List[typing.Tuple[str, str]]
-Match = typing.Tuple[T, Params]
+Params = List[Tuple[str, str]]
+Match = Tuple[T, Params]
 
-class Router(typing.Generic[T]):
+
+class Router(Generic[T]):
     __slots__ = ("_router",)
 
     _router: "_Router[T]"
@@ -20,5 +21,5 @@ class Router(typing.Generic[T]):
     def insert(self, path: str, value: T) -> None:
         self._router.insert(path, value)
 
-    def find(self, path: str) -> typing.Optional[Match[T]]:
+    def find(self, path: str) -> Optional[Match[T]]:
         return self._router.find(path)
