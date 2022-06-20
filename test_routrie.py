@@ -1,3 +1,4 @@
+import pickle
 import pytest
 
 from routrie import Router
@@ -48,6 +49,23 @@ def test_no_match() -> None:
     # No match
     node = router.find("/noway-jose")
     assert node is None
+
+
+def test_serialization() -> None:
+    router: Router[int] = Router()
+    router.insert("/", 0)
+
+    router = pickle.loads(pickle.dumps(router))
+
+    # No match
+    node = router.find("/noway-jose")
+    assert node is None
+    # Match
+    node = router.find("/")
+    assert node is not None
+    match, params = node
+    assert match == 0
+    assert params == []
 
 
 if __name__ == "__main__":
