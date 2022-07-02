@@ -13,11 +13,13 @@ from routrie import Router, Param
 
 # the generic parameter is the value being stored
 # normally this will be an endpoint / route instance
-router: Router[int] = Router()
-
-router.insert("/users", 1)
-router.insert("/users/:id", 2)
-router.insert("/users/repos/*any", 3)
+router = Router(
+  {
+    "/users": 1,
+    "/users/:id": 2,
+    "/user/repo/*any": 3,
+  }
+)
 
 matched = router.find("/foo-bar-baz")
 assert matched is None
