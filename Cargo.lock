@@ -77,9 +77,9 @@ dependencies = [
 
 [[package]]
 name = "path-tree"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56f0ae772a98982b2ec255a2f2ad4db37aecf70a13c7ca1c8d7253c75d0813a4"
+checksum = "0a69e1485c22ff6c5622f72b6a4298e8e762b526c578ab8f13854944b1d7d17e"
 
 [[package]]
 name = "proc-macro2"
@@ -169,7 +169,7 @@ dependencies = [
 
 [[package]]
 name = "routrie"
-version = "0.5.0"
+version = "0.5.2"
 dependencies = [
  "path-tree",
  "pyo3",
