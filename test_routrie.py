@@ -1,4 +1,7 @@
+from concurrent.futures import ThreadPoolExecutor, wait
+import os
 import pickle
+from time import time
 
 import pytest
 
@@ -71,21 +74,64 @@ def test_serialization() -> None:
 
 
 def test_duplicate_route() -> None:
+    # only the last one is preserved
     router = Router(
         routes=dict(
             [
-                ("/", 0),
-                ("/", 1),
+                ("/:foo", 0),
+                ("/:bar", 1),
             ]
         )
     )
 
-    # No match
-    node = router.find("/")
+    node = router.find("/baz")
     assert node is not None
     match, params = node
     assert match == 1
-    assert params == []
+    assert params == [("bar", "baz")]
+
+
+cpu_count = os.cpu_count()
+
+
+@pytest.mark.skipif(
+    not cpu_count or cpu_count < 2, reason="this test requires at least 2 CPU cores"
+)
+def test_gil_release() -> None:
+    # make a really large routing tree so that we spend a good chunk of time in Rust
+    total_routes = 100_000
+    routes = {
+        f"/:part1_{n}" + f"/foo/bar/baz" * 1_000 + f"/:part2_{n}": n
+        for n in range(total_routes)
+    }
+    router = Router(routes)
+
+    def match() -> None:
+        for n in range(total_routes):
+            path = f"/part1_{n}" + f"/foo/bar/baz" * 1_000 + f"/part2_{n}"
+            match = router.find(path)
+            assert match is not None
+
+    start = time()
+    match()
+    match()
+    end = time()
+    elapsed_sequential = end - start
+
+    start = time()
+    with ThreadPoolExecutor(max_workers=2) as exec:
+        futures = (
+            exec.submit(match),
+            exec.submit(match),
+        )
+        wait(futures)
+    end = time()
+    elapsed_threads = end - start
+
+    assert elapsed_threads < elapsed_sequential * 0.75, (
+        elapsed_threads,
+        elapsed_sequential,
+    )
 
 
 if __name__ == "__main__":

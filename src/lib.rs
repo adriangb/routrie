@@ -17,8 +17,12 @@ impl Router {
     fn insert(&mut self, path: &str, data: &PyAny, py: Python) -> () {
         self.router.insert(path, data.into_py(py));
     }
-    fn find<'m>(&'m self, path: &'m str) -> Option<(&'m Py<PyAny>, Vec<(&'m str, &'m str)>)> {
-        self.router.find(path)
+    fn find<'m>(
+        &'m self,
+        path: &'m str,
+        py: Python,
+    ) -> Option<(&'m Py<PyAny>, Vec<(&'m str, &'m str)>)> {
+        py.allow_threads(|| self.router.find(path))
     }
 }
 
