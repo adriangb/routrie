@@ -71,21 +71,21 @@ def test_serialization() -> None:
 
 
 def test_duplicate_route() -> None:
+    # only the last one is preserved
     router = Router(
         routes=dict(
             [
-                ("/", 0),
-                ("/", 1),
+                ("/:foo", 0),
+                ("/:bar", 1),
             ]
         )
     )
 
-    # No match
-    node = router.find("/")
+    node = router.find("/baz")
     assert node is not None
     match, params = node
     assert match == 1
-    assert params == []
+    assert params == [("bar", "baz")]
 
 
 if __name__ == "__main__":
