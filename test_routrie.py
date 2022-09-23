@@ -54,6 +54,22 @@ def test_no_match() -> None:
     assert node is None
 
 
+def test_empty_path() -> None:
+    router = Router(routes={"/": 0, "": 1,})
+
+    node = router.find("/")
+    assert node is not None
+    match, params = node
+    assert match == 0
+    assert params == []
+
+    node = router.find("")
+    assert node is not None
+    match, params = node
+    assert match == 1
+    assert params == []
+
+
 def test_serialization() -> None:
     router = Router({"/": 0})
 
