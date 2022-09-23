@@ -1,7 +1,6 @@
 
 [project]
 name = "routrie"
-repository = "https://github.com/adriangb/routrie"
 description = "Python wrapper for https://github.com/viz-rs/path-tree"
 authors = [
     {name = "Adrian Garcia Badaracco"}
@@ -23,7 +22,7 @@ documentation = "https://github.com/adriangb/routrie/README.md"
 repository = "https://github.com/adriangb/routrie"
 
 [build-system]
-requires = ["maturin>=0.13.0<14"]
+requires = ["maturin>=0.13.0"]
 build-backend = "maturin"
 
 [tool.maturin]

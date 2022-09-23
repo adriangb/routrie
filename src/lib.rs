@@ -18,7 +18,10 @@ impl Router {
         self.router.insert(path, data.into_py(py));
     }
     fn find<'m>(&'m self, path: &'m str) -> Option<(&'m Py<PyAny>, Vec<(&'m str, &'m str)>)> {
-        self.router.find(path)
+        match self.router.find(path) {
+            None => None,
+            Some(path) => Some((path.value, path.params())),
+        }
     }
 }
 

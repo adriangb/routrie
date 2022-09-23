@@ -16,7 +16,7 @@ def test_routing() -> None:
             "/users/:user_id/repos/:id": 5,
             "/users/:user_id/repos/:id/*any": 6,
             "/:username": 7,
-            "/*any": 8,
+            "/:any*": 8,
             "/about": 9,
             "/about/": 10,
             "/about/us": 11,
@@ -84,8 +84,8 @@ def test_duplicate_route() -> None:
     node = router.find("/baz")
     assert node is not None
     match, params = node
-    assert match == 1
-    assert params == [("bar", "baz")]
+    assert match == 0
+    assert params == [("foo", "baz")]
 
 
 if __name__ == "__main__":
